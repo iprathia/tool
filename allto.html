@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>वित्तीय कैलकुलेटर टूल्स</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="theme.css">
+<script src="theme.js" defer></script>
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .card {
+      margin-bottom: 30px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+  </style>
+</head>
+<body>
+    <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark" >
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">🧰 MultiTools</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="contect.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-5">
+    <h2 class="text-center mb-4">💰 वित्तीय कैलकुलेटर टूल्स</h2>
+
+    <!-- GST Calculator -->
+    <div class="card p-4">
+      <h4>GST कैलकुलेटर</h4>
+      <div class="row">
+        <div class="col-md-4">
+          <input type="number" id="gstAmount" class="form-control" placeholder="Amount">
+        </div>
+        <div class="col-md-4">
+          <input type="number" id="gstRate" class="form-control" placeholder="GST %">
+        </div>
+        <div class="col-md-4">
+          <button onclick="calcGST()" class="btn btn-primary w-100">गणना करें</button>
+        </div>
+      </div>
+      <p class="mt-3">GST राशि: ₹ <span id="gstResult">0</span></p>
+    </div>
+
+    <!-- EMI Calculator -->
+    <div class="card p-4">
+      <h4>EMI कैलकुलेटर</h4>
+      <div class="row">
+        <div class="col-md-3">
+          <input type="number" id="loanAmount" class="form-control" placeholder="Loan Amount">
+        </div>
+        <div class="col-md-3">
+          <input type="number" id="interestRate" class="form-control" placeholder="Interest %">
+        </div>
+        <div class="col-md-3">
+          <input type="number" id="loanTerm" class="form-control" placeholder="Years">
+        </div>
+        <div class="col-md-3">
+          <button onclick="calcEMI()" class="btn btn-success w-100">EMI निकालें</button>
+        </div>
+      </div>
+      <p class="mt-3">मासिक EMI: ₹ <span id="emiResult">0</span></p>
+    </div>
+
+    <!-- Discount Calculator -->
+    <div class="card p-4">
+      <h4>डिस्काउंट कैलकुलेटर</h4>
+      <div class="row">
+        <div class="col-md-4">
+          <input type="number" id="discAmount" class="form-control" placeholder="Original Price">
+        </div>
+        <div class="col-md-4">
+          <input type="number" id="discRate" class="form-control" placeholder="Discount %">
+        </div>
+        <div class="col-md-4">
+          <button onclick="calcDiscount()" class="btn btn-warning w-100">निकालें</button>
+        </div>
+      </div>
+      <p class="mt-3">Final Price: ₹ <span id="discResult">0</span></p>
+    </div>
+
+    <!-- Profit & Loss Calculator -->
+    <div class="card p-4">
+      <h4>लाभ/हानि कैलकुलेटर</h4>
+      <div class="row">
+        <div class="col-md-4">
+          <input type="number" id="costPrice" class="form-control" placeholder="Cost Price">
+        </div>
+        <div class="col-md-4">
+          <input type="number" id="sellPrice" class="form-control" placeholder="Selling Price">
+        </div>
+        <div class="col-md-4">
+          <button onclick="calcProfitLoss()" class="btn btn-info w-100">जांचें</button>
+        </div>
+      </div>
+      <p class="mt-3">परिणाम: <span id="plResult">-</span></p>
+    </div>
+
+    <!-- Loan Calculator -->
+    <div class="card p-4">
+      <h4>Loan कैलकुलेटर</h4>
+      <div class="row">
+        <div class="col-md-6">
+          <input type="number" id="loanPrincipal" class="form-control" placeholder="Loan Amount">
+        </div>
+        <div class="col-md-6">
+          <input type="number" id="loanRate" class="form-control" placeholder="Interest Rate %">
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <input type="number" id="loanYears" class="form-control" placeholder="Loan Term (Years)">
+        </div>
+        <div class="col-md-6">
+          <button onclick="calcLoanTotal()" class="btn btn-dark w-100">Calculate</button>
+        </div>
+      </div>
+      <p class="mt-3">कुल राशि (ब्याज सहित): ₹ <span id="loanResult">0</span></p>
+    </div>
+
+    <!-- Fuel Cost Splitter -->
+    <div class="card p-4">
+      <h4>ईंधन लागत विभाजक</h4>
+      <div class="row">
+        <div class="col-md-4">
+          <input type="number" id="fuelCost" class="form-control" placeholder="Total Fuel Cost">
+        </div>
+        <div class="col-md-4">
+          <input type="number" id="numPeople" class="form-control" placeholder="Number of People">
+        </div>
+        <div class="col-md-4">
+          <button onclick="calcFuelSplit()" class="btn btn-secondary w-100">विभाजित करें</button>
+        </div>
+      </div>
+      <p class="mt-3">प्रति व्यक्ति खर्च: ₹ <span id="fuelResult">0</span></p>
+    </div>
+
+    <!-- TDS Calculator -->
+    <div class="card p-4">
+      <h4>TDS कैलकुलेटर</h4>
+      <div class="row">
+        <div class="col-md-6">
+          <input type="number" id="tdsAmount" class="form-control" placeholder="Total Payment Amount">
+        </div>
+        <div class="col-md-4">
+          <input type="number" id="tdsRate" class="form-control" placeholder="TDS %">
+        </div>
+        <div class="col-md-2">
+          <button onclick="calcTDS()" class="btn btn-danger w-100">निकालें</button>
+        </div>
+      </div>
+      <p class="mt-3">TDS राशि: ₹ <span id="tdsResult">0</span></p>
+    </div>
+
+  </div>
+ <!-- ✅ Footer -->
+  <footer class="bg-dark text-white text-center py-3 mt-auto">
+    © 2025 | All Rights Reserved | Made with ❤️ by You
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function calcGST() {
+      const amt = parseFloat(document.getElementById('gstAmount').value);
+      const rate = parseFloat(document.getElementById('gstRate').value);
+      const gst = amt * (rate / 100);
+      document.getElementById('gstResult').innerText = gst.toFixed(2);
+    }
+
+    function calcEMI() {
+      const P = parseFloat(document.getElementById('loanAmount').value);
+      const r = parseFloat(document.getElementById('interestRate').value) / 1200;
+      const n = parseFloat(document.getElementById('loanTerm').value) * 12;
+      const emi = P * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
+      document.getElementById('emiResult').innerText = emi ? emi.toFixed(2) : 0;
+    }
+
+    function calcDiscount() {
+      const amount = parseFloat(document.getElementById('discAmount').value);
+      const rate = parseFloat(document.getElementById('discRate').value);
+      const discount = amount * (rate / 100);
+      document.getElementById('discResult').innerText = (amount - discount).toFixed(2);
+    }
+
+    function calcProfitLoss() {
+      const cost = parseFloat(document.getElementById('costPrice').value);
+      const sell = parseFloat(document.getElementById('sellPrice').value);
+      let result = '';
+      if (sell > cost) {
+        result = `लाभ ₹${(sell - cost).toFixed(2)}`;
+      } else if (sell < cost) {
+        result = `हानि ₹${(cost - sell).toFixed(2)}`;
+      } else {
+        result = 'न लाभ, न हानि';
+      }
+      document.getElementById('plResult').innerText = result;
+    }
+
+    function calcLoanTotal() {
+      const principal = parseFloat(document.getElementById('loanPrincipal').value);
+      const rate = parseFloat(document.getElementById('loanRate').value) / 100;
+      const years = parseFloat(document.getElementById('loanYears').value);
+      const interest = principal * rate * years;
+      const total = principal + interest;
+      document.getElementById('loanResult').innerText = total.toFixed(2);
+    }
+
+    function calcFuelSplit() {
+      const cost = parseFloat(document.getElementById('fuelCost').value);
+      const people = parseInt(document.getElementById('numPeople').value);
+      const split = cost / people;
+      document.getElementById('fuelResult').innerText = split.toFixed(2);
+    }
+
+    function calcTDS() {
+      const amount = parseFloat(document.getElementById('tdsAmount').value);
+      const rate = parseFloat(document.getElementById('tdsRate').value);
+      const tds = amount * (rate / 100);
+      document.getElementById('tdsResult').innerText = tds.toFixed(2);
+    }
+  </script>
+</body>
+</html>
